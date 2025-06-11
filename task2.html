@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Web Page</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Flexbox Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    /* CSS Grid Layout */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    form input, form textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    form button {
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .todo {
+      background: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .todo input {
+      padding: 10px;
+      width: 70%;
+    }
+
+    .todo button {
+      padding: 10px;
+      margin-left: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-top: 10px;
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>My Website</div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">Contact</a>
+      <a href="#">Tasks</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Contact Form -->
+    <form id="contactForm" onsubmit="return validateForm()">
+      <h2>Contact Us</h2>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- To-Do List -->
+    <div class="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Form validation function
+    function validateForm() {
+      const email = document.getElementById("email").value;
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if (!name || !email || !message) {
+        alert("All fields are required!");
+        return false;
+      }
+
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid email address!");
+        return false;
+      }
+
+      alert("Form submitted successfully!");
+      return true;
+    }
+
+    // To-Do List function
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const task = taskInput.value.trim();
+      const taskList = document.getElementById("taskList");
+
+      if (task === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.textContent = task;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.style.marginLeft = "10px";
+      removeBtn.onclick = function () {
+        taskList.removeChild(li);
+      };
+
+      li.appendChild(removeBtn);
+      taskList.appendChild(li);
+
+      taskInput.value = "";
+    }
+  </script>
+
+</body>
+</html>
